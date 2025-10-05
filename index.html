@@ -37,30 +37,34 @@
             chatbox.scrollTop = chatbox.scrollHeight;
         }
 
-        // Predefined Q&A
-        const qaPairs = [
-            { q: "sarit love", a: "Sokny ❤️" },
-            { q: "how to love my crush", a: "Be kind, honest, and show your feelings gently." },
-            { q: "how to express love", a: "Small gestures, compliments, and spending quality time work wonders." },
-            { q: "what is love", a: "Love is care, trust, and respect for someone special." },
-            { q: "how to know if someone loves you", a: "They show interest in your life, care for you, and spend time with you." },
-            { q: "how to ask crush out", a: "Be confident, polite, and honest. Start with a casual invitation." },
-            { q: "how to make someone fall in love", a: "You can’t force love, but being genuine, caring, and supportive helps." },
-            { q: "what to do when heartbroken", a: "Give yourself time, talk to friends, and focus on self-care." },
-            { q: "how to confess love", a: "Find the right moment, be honest, and respect their feelings." },
-            { q: "best ways to impress crush", a: "Be yourself, show kindness, and have confidence." },
-            { q: "how to maintain a relationship", a: "Communicate openly, support each other, and spend quality time together." },
+        // Special answers
+        const specialAnswers = {
+            "sarit love": "Sokny ❤️",
+        };
+
+        // General love answers (randomly pick one)
+        const randomAnswers = [
+            "Be kind, honest, and show your feelings gently.",
+            "Small gestures and spending quality time matter most.",
+            "Love is about care, respect, and trust.",
+            "Communicate openly and support each other.",
+            "Confidence and being yourself will impress your crush.",
+            "Time and patience are key in love.",
+            "Listen to their heart and act with empathy.",
+            "A smile can sometimes say more than words.",
+            "Be sincere and show your affection naturally.",
         ];
 
         function getBotResponse(text) {
             text = text.toLowerCase().trim();
 
-            // Check predefined Q&A
-            for (let pair of qaPairs) {
-                if (text.includes(pair.q)) return pair.a;
+            // Check special answers first
+            for (let key in specialAnswers) {
+                if (text.includes(key)) return specialAnswers[key];
             }
 
-            return "I can answer love questions like:\n- How to love my crush\n- How to confess love\n- What is love\nOr ask 'Sarit love?' for a special answer!";
+            // Random answer for general questions
+            return randomAnswers[Math.floor(Math.random() * randomAnswers.length)];
         }
 
         function sendMessage() {
