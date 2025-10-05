@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Q&A Chatbot</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-pink-50 flex items-center justify-center min-h-screen">
+    <div class="w-full max-w-xl bg-white shadow-lg rounded-2xl p-6 flex flex-col">
+        <h1 class="text-2xl font-bold text-center mb-4 text-pink-600">Love Q&A Chatbot</h1>
+        <div id="chatbox" class="flex-1 overflow-y-auto mb-4 h-96 p-2 border border-gray-300 rounded-lg">
+            <div class="text-gray-500 text-center mt-2">Ask me love questions!</div>
+        </div>
+        <div class="flex">
+            <input id="userInput" type="text" placeholder="Type your question..." class="flex-1 border border-gray-300 rounded-l-lg px-4 py-2 focus:outline-none">
+            <button id="sendBtn" class="bg-pink-500 text-white px-4 py-2 rounded-r-lg hover:bg-pink-600">Send</button>
+        </div>
+    </div>
+
+    <script>
+        const chatbox = document.getElementById("chatbox");
+        const input = document.getElementById("userInput");
+        const sendBtn = document.getElementById("sendBtn");
+
+        function appendMessage(sender, message) {
+            const msgDiv = document.createElement("div");
+            msgDiv.classList.add("my-2", "p-2", "rounded-lg", "max-w-xs");
+            if (sender === "user") {
+                msgDiv.classList.add("bg-pink-100", "self-end", "text-right");
+                msgDiv.textContent = message;
+            } else {
+                msgDiv.classList.add("bg-gray-200", "self-start", "text-left");
+                msgDiv.textContent = message;
+            }
+            chatbox.appendChild(msgDiv);
+            chatbox.scrollTop = chatbox.scrollHeight;
+        }
+
+        // Predefined Q&A
+        const qaPairs = [
+            { q: "sarit love", a: "Sokny ❤️" },
+            { q: "how to love my crush", a: "Be kind, honest, and show your feelings gently." },
+            { q: "how to express love", a: "Small gestures, compliments, and spending quality time work wonders." },
+            { q: "what is love", a: "Love is care, trust, and respect for someone special." },
+            { q: "how to know if someone loves you", a: "They show interest in your life, care for you, and spend time with you." },
+            { q: "how to ask crush out", a: "Be confident, polite, and honest. Start with a casual invitation." },
+            { q: "how to make someone fall in love", a: "You can’t force love, but being genuine, caring, and supportive helps." },
+            { q: "what to do when heartbroken", a: "Give yourself time, talk to friends, and focus on self-care." },
+            { q: "how to confess love", a: "Find the right moment, be honest, and respect their feelings." },
+            { q: "best ways to impress crush", a: "Be yourself, show kindness, and have confidence." },
+            { q: "how to maintain a relationship", a: "Communicate openly, support each other, and spend quality time together." },
+        ];
+
+        function getBotResponse(text) {
+            text = text.toLowerCase().trim();
+
+            // Check predefined Q&A
+            for (let pair of qaPairs) {
+                if (text.includes(pair.q)) return pair.a;
+            }
+
+            return "I can answer love questions like:\n- How to love my crush\n- How to confess love\n- What is love\nOr ask 'Sarit love?' for a special answer!";
+        }
+
+        function sendMessage() {
+            const userText = input.value.trim();
+            if (!userText) return;
+            appendMessage("user", userText);
+            const botReply = getBotResponse(userText);
+            setTimeout(() => appendMessage("bot", botReply), 300);
+            input.value = "";
+        }
+
+        sendBtn.addEventListener("click", sendMessage);
+        input.addEventListener("keypress", function(e) {
+            if (e.key === "Enter") sendMessage();
+        });
+    </script>
+</body>
+</html>
